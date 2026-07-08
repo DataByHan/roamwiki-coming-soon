@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RoamWiki — Launching soon</title>
+<meta name="description" content="RoamWiki — the travel wiki for everyone, everywhere. Launching soon." />
+<meta property="og:title" content="RoamWiki — Launching soon" />
+<meta property="og:description" content="A community-built travel guide to every city on earth. Launching soon." />
+<meta property="og:type" content="website" />
+<style>
+  :root{
+    --ink:#0a0b12;
+    --ink-2:#0e1019;
+    --fg:#f6f3ee;
+    --fg-muted:#b7b1a8;
+    --fg-subtle:#7d7970;
+    --line:rgba(255,255,255,.10);
+    --o1:#FF6B35;
+    --o2:#F7931E;
+    --o3:#FFD700;
+    --grad:linear-gradient(105deg,var(--o1),var(--o2) 55%,var(--o3));
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--fg);
+    font-family:"Plus Jakarta Sans",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow:hidden;
+  }
+  /* ── Atmosphere: night sky + horizon dawn ── */
+  .sky{position:fixed;inset:0;z-index:0;overflow:hidden}
+  .sky::before{ /* deep sky wash */
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(120% 90% at 50% -10%, #171a2b 0%, var(--ink-2) 42%, var(--ink) 72%);
+  }
+  .dawn{ /* warm horizon glow, slow drift */
+    position:absolute;left:50%;bottom:-38vh;width:150vw;height:95vh;
+    transform:translateX(-50%);
+    background:
+      radial-gradient(closest-side, rgba(255,183,77,.42), rgba(247,147,30,.20) 45%, rgba(255,107,53,0) 72%);
+    filter:blur(28px);
+    animation:breathe 13s ease-in-out infinite;
+  }
+  .aurora{ /* faint upper color veil */
+    position:absolute;left:50%;top:-24vh;width:120vw;height:70vh;transform:translateX(-50%);
+    background:
+      radial-gradient(closest-side, rgba(103,90,220,.20), rgba(48,207,208,.10) 55%, transparent 75%);
+    filter:blur(40px);
+    animation:sway 19s ease-in-out infinite;
+  }
+  .grain{ /* subtle vignette to seat the type */
+    position:absolute;inset:0;
+    background:radial-gradient(130% 100% at 50% 42%, transparent 55%, rgba(0,0,0,.55) 100%);
+  }
+  /* ── Roaming orbit motif behind wordmark ── */
+  .orbit{
+    position:absolute;left:50%;top:44%;width:min(78vw,760px);aspect-ratio:1;
+    transform:translate(-50%,-50%) rotate(0deg);
+    border:1px dashed rgba(255,255,255,.09);border-radius:50%;
+    animation:spin 60s linear infinite;
+  }
+  .orbit::after{ /* the roaming dot */
+    content:"";position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;
+    border-radius:50%;background:var(--o3);box-shadow:0 0 14px 2px rgba(255,215,0,.6);
+  }
+  .orbit.inner{width:min(56vw,540px);border-color:rgba(255,255,255,.06);animation-duration:42s;animation-direction:reverse}
+  .orbit.inner::after{background:var(--o1);box-shadow:0 0 12px 2px rgba(255,107,53,.55)}
+
+  /* ── Content ── */
+  main{
+    position:relative;z-index:2;min-height:100svh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:clamp(20px,3.4vh,34px);
+    padding:40px 24px;text-align:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:7px 15px 7px 12px;border-radius:999px;
+    border:1px solid var(--line);background:rgba(255,255,255,.04);
+    font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--fg-muted);backdrop-filter:blur(6px);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--o2);
+    box-shadow:0 0 0 0 rgba(247,147,30,.55);animation:pulse 2.4s ease-out infinite}
+
+  .wordmark{
+    margin:0;font-weight:800;line-height:.92;letter-spacing:-.035em;
+    font-size:clamp(52px,13.5vw,150px);
+    text-wrap:balance;
+  }
+  .wordmark .roam{
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+    -webkit-text-fill-color:transparent;
+  }
+  .wordmark .wiki{color:var(--fg)}
+
+  .tagline{
+    margin:0;max-width:22ch;
+    font-size:clamp(19px,2.5vw,28px);font-weight:600;line-height:1.28;letter-spacing:-.01em;
+    color:var(--fg);text-wrap:balance;
+  }
+  .sub{
+    margin:0;max-width:52ch;
+    font-size:clamp(14.5px,1.6vw,17px);line-height:1.6;color:var(--fg-muted);
+  }
+
+  /* multilingual "coming soon" rotator */
+  .rotator{
+    display:inline-flex;align-items:baseline;gap:.5ch;
+    font-size:clamp(14px,1.7vw,17px);font-weight:600;color:var(--fg-subtle);
+    letter-spacing:.01em;
+  }
+  .rotator .label{color:var(--fg-subtle)}
+  .rotator .word{
+    position:relative;min-width:9ch;text-align:left;color:var(--o2);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .rotator .word.out{opacity:0;transform:translateY(6px)}
+
+  footer{
+    position:fixed;left:0;right:0;bottom:0;z-index:2;
+    display:flex;justify-content:center;gap:18px;align-items:center;
+    padding:22px 24px;font-size:12.5px;letter-spacing:.08em;color:var(--fg-subtle);
+  }
+  footer .site{color:var(--fg-muted);font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+  footer .sep{opacity:.4}
+
+  @keyframes breathe{0%,100%{opacity:.85;transform:translateX(-50%) translateY(0) scale(1)}
+    50%{opacity:1;transform:translateX(-50%) translateY(-3vh) scale(1.05)}}
+  @keyframes sway{0%,100%{opacity:.7;transform:translateX(-52%)}50%{opacity:1;transform:translateX(-48%)}}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(247,147,30,.5)}70%{box-shadow:0 0 0 8px rgba(247,147,30,0)}100%{box-shadow:0 0 0 0 rgba(247,147,30,0)}}
+
+  @media (prefers-reduced-motion: reduce){
+    .dawn,.aurora,.orbit,.eyebrow .dot{animation:none}
+    .rotator .word{transition:none}
+  }
+</style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="dawn"></div>
+    <div class="aurora"></div>
+    <div class="orbit"></div>
+    <div class="orbit inner"></div>
+    <div class="grain"></div>
+  </div>
+
+  <main>
+    <span class="eyebrow"><span class="dot"></span>Launching soon · 2026</span>
+
+    <h1 class="wordmark"><span class="roam">Roam</span><span class="wiki">Wiki</span></h1>
+
+    <p class="tagline">The travel wiki for everyone, everywhere.</p>
+    <p class="sub">A community-built guide to every city on earth — practical, local, and free. We're putting the finishing touches on it.</p>
+
+    <p class="rotator" aria-label="Coming soon in many languages">
+      <span class="label">Coming soon —</span>
+      <span class="word" id="rot">곧 만나요</span>
+    </p>
+  </main>
+
+  <footer>
+    <span class="site">roamwiki.com</span>
+    <span class="sep">·</span>
+    <span>The world's travel wiki</span>
+  </footer>
+
+  <script>
+    (function(){
+      var words = [
+        "곧 만나요",        // Korean
+        "coming soon",     // English
+        "近日公開",         // Japanese
+        "即将上线",         // Chinese
+        "muy pronto",      // Spanish
+        "bientôt",         // French
+        "in arrivo",       // Italian
+        "demnächst",       // German
+        "em breve",        // Portuguese
+        "قريباً",           // Arabic
+        "скоро",           // Russian
+        "जल्द आ रहा है"     // Hindi
+      ];
+      var el = document.getElementById("rot");
+      if(!el) return;
+      var i = 0;
+      setInterval(function(){
+        el.classList.add("out");
+        setTimeout(function(){
+          i = (i + 1) % words.length;
+          el.textContent = words[i];
+          // RTL-aware alignment for Arabic
+          el.style.direction = (words[i] === "قريباً") ? "rtl" : "ltr";
+          el.classList.remove("out");
+        }, 500);
+      }, 2400);
+    })();
+  </script>
+</body>
+</html>
