@@ -142,33 +142,36 @@
     .rotator .word{transition:none}
   }
 
-  /* ── Memo (visitor note) ── */
-  .memo{position:fixed;right:16px;bottom:74px;z-index:5;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-  .memo-toggle{display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg-muted);font:inherit;font-size:13px;font-weight:600;backdrop-filter:blur(8px);transition:background .2s ease,color .2s ease,transform .2s ease}
-  .memo-toggle:hover{background:rgba(255,255,255,.09);color:var(--fg);transform:translateY(-1px)}
-  .memo-toggle .emoji{font-size:14px}
-  .memo-panel{display:none;width:min(86vw,300px);padding:16px;border-radius:16px;border:1px solid var(--line);background:rgba(18,20,32,.74);backdrop-filter:saturate(160%) blur(18px);box-shadow:0 18px 50px -12px rgba(0,0,0,.6)}
-  .memo.open .memo-panel{display:block;animation:memoIn .25s ease}
-  .memo-title{margin:0 0 10px;font-size:14px;font-weight:700;color:var(--fg)}
-  .memo-input{display:block;width:100%;margin-bottom:9px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--fg);font:inherit;font-size:13.5px;line-height:1.45;resize:none;outline:none;transition:border-color .18s ease,background .18s ease}
-  .memo-input::placeholder{color:var(--fg-subtle)}
-  .memo-input:focus{border-color:rgba(247,147,30,.55);background:rgba(255,255,255,.07)}
-  .memo-input.err{border-color:rgba(255,107,53,.8)}
-  .memo-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
-  .memo-send{width:100%;margin-top:2px;padding:10px 14px;cursor:pointer;border:0;border-radius:999px;background:var(--grad);color:#1a1206;font:inherit;font-size:14px;font-weight:700;letter-spacing:.01em;box-shadow:0 8px 20px -6px rgba(247,147,30,.5);transition:transform .2s ease,filter .2s ease}
-  .memo-send:hover{transform:translateY(-1px);filter:brightness(1.05)}
-  .memo-send:disabled{opacity:.6;cursor:default;transform:none}
-  .memo-thanks{display:none;text-align:center;padding:8px 4px 4px}
-  .memo-thanks .heart{font-size:26px}
-  .memo-thanks p{margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--fg-muted)}
-  .memo.done form{display:none}
-  .memo.done .memo-thanks{display:block;animation:memoIn .25s ease}
-  @keyframes memoIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  @media (max-width:520px){.memo{right:12px;bottom:66px}}
-  @media (prefers-reduced-motion: reduce){
-    .memo.open .memo-panel,.memo.done .memo-thanks{animation:none}
-    .memo-toggle,.memo-send{transition:none}
-  }
+  /* ── Guestbook board ── */
+  .board{position:fixed;right:16px;bottom:16px;z-index:5;display:flex;flex-direction:column;
+    width:min(92vw,340px);max-height:min(72vh,540px);overflow:hidden;
+    border:1px solid var(--line);border-radius:18px;background:rgba(18,20,32,.74);
+    backdrop-filter:saturate(160%) blur(18px);box-shadow:0 18px 50px -12px rgba(0,0,0,.6)}
+  .board-head{padding:14px 16px 0}
+  .board-title{margin:0;font-size:14px;font-weight:700;color:var(--fg)}
+  .board-sub{margin:3px 0 0;font-size:12px;line-height:1.4;color:var(--fg-subtle)}
+  .board-form{padding:12px 16px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line)}
+  .board-input{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);
+    background:rgba(255,255,255,.05);color:var(--fg);font:inherit;font-size:13.5px;line-height:1.45;
+    resize:none;outline:none;transition:border-color .18s ease,background .18s ease}
+  .board-input::placeholder{color:var(--fg-subtle)}
+  .board-input:focus{border-color:rgba(247,147,30,.55);background:rgba(255,255,255,.07)}
+  .board-input.err{border-color:rgba(255,107,53,.85)}
+  .board-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+  .board-row{display:flex;align-items:center;gap:8px}
+  .board-row .board-input{flex:1}
+  .board-send{flex:none;padding:9px 16px;cursor:pointer;border:0;border-radius:999px;background:var(--grad);
+    color:#1a1206;font:inherit;font-size:13px;font-weight:700;box-shadow:0 8px 20px -6px rgba(247,147,30,.5);
+    transition:transform .2s ease,filter .2s ease}
+  .board-send:hover{transform:translateY(-1px);filter:brightness(1.05)}
+  .board-send:disabled{opacity:.55;cursor:default;transform:none}
+  .board-list{overflow-y:auto;padding:10px 16px 14px;display:flex;flex-direction:column;gap:9px}
+  .board-empty{margin:6px 0;font-size:12.5px;color:var(--fg-subtle);text-align:center}
+  .note{padding:9px 11px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+  .note.mine{border-color:rgba(247,147,30,.4);background:rgba(247,147,30,.08)}
+  .note-msg{margin:0;font-size:13px;line-height:1.45;color:var(--fg);white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+  .note-meta{display:block;margin-top:5px;font-size:11px;color:var(--fg-subtle);letter-spacing:.02em}
+  @media (max-width:520px){.board{right:10px;bottom:10px;max-height:58vh}}
 </style>
 </head>
 <body>
@@ -200,24 +203,21 @@
     <span>The world's travel wiki</span>
   </footer>
 
-  <div class="memo" id="memo">
-    <button type="button" class="memo-toggle" id="memo-toggle" aria-expanded="false" aria-controls="memo-panel">
-      <span class="emoji" aria-hidden="true">✏️</span><span>한마디 남기기</span>
-    </button>
-    <div class="memo-panel" id="memo-panel">
-      <form id="memo-form" novalidate>
-        <p class="memo-title">출시를 기다리며 ✨</p>
-        <textarea id="memo-msg" class="memo-input" rows="2" maxlength="1000" placeholder="응원 한마디, 바라는 기능…" aria-label="메시지" required></textarea>
-        <input id="memo-email" class="memo-input" type="email" maxlength="200" placeholder="이메일 (선택 · 출시 알림)" aria-label="이메일 (선택)" autocomplete="email" />
-        <input id="memo-hp" class="memo-hp" tabindex="-1" autocomplete="off" aria-hidden="true" placeholder="Leave this empty" />
-        <button type="submit" class="memo-send" id="memo-send">남기기</button>
-      </form>
-      <div class="memo-thanks">
-        <div class="heart" aria-hidden="true">🧡</div>
-        <p>남겨주셔서 고마워요!<br />출시되면 가장 먼저 알려드릴게요.</p>
-      </div>
+  <section class="board" id="board" aria-label="Guestbook">
+    <div class="board-head">
+      <p class="board-title">Guestbook ✨</p>
+      <p class="board-sub">Leave a note while we build RoamWiki.</p>
     </div>
-  </div>
+    <form class="board-form" id="board-form" novalidate>
+      <textarea id="board-msg" class="board-input" rows="2" maxlength="1000" placeholder="A word of encouragement, a feature you'd love…" aria-label="Message" required></textarea>
+      <input id="board-hp" class="board-hp" tabindex="-1" autocomplete="off" aria-hidden="true" placeholder="Leave this empty" />
+      <div class="board-row">
+        <input id="board-email" class="board-input" type="email" maxlength="200" placeholder="Email (optional · launch alert)" aria-label="Email (optional)" autocomplete="email" />
+        <button type="submit" id="board-send" class="board-send">Post</button>
+      </div>
+    </form>
+    <div class="board-list" id="board-list" aria-live="polite"></div>
+  </section>
 
   <script>
     (function(){
@@ -263,39 +263,88 @@
     } catch (e) {}
   })();
   </script>
-  <!-- visitor memo -->
+  <!-- guestbook -->
   <script>
   (function () {
-    var root = document.getElementById("memo");
+    var API = "https://roamwiki-beacon.hanms-data.workers.dev";
+    var root = document.getElementById("board");
     if (!root) return;
     var EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-    var toggle = document.getElementById("memo-toggle");
-    var form = document.getElementById("memo-form");
-    var send = document.getElementById("memo-send");
-    var emailEl = document.getElementById("memo-email");
-    toggle.addEventListener("click", function () {
-      var open = root.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      if (open) {
-        var m = document.getElementById("memo-msg");
-        if (m) setTimeout(function () { m.focus(); }, 60);
-      }
-    });
+    var listEl = document.getElementById("board-list");
+    var form = document.getElementById("board-form");
+    var msgEl = document.getElementById("board-msg");
+    var emailEl = document.getElementById("board-email");
+    var send = document.getElementById("board-send");
+
+    function flag(cc) {
+      if (!cc || cc.length !== 2) return "";
+      return cc.toUpperCase().replace(/./g, function (c) {
+        return String.fromCodePoint(127397 + c.charCodeAt(0));
+      });
+    }
+    function ago(ts) {
+      var t = new Date(String(ts).replace(" ", "T") + "Z").getTime();
+      if (isNaN(t)) return "";
+      var s = Math.max(1, (Date.now() - t) / 1000);
+      if (s < 60) return "just now";
+      var m = s / 60; if (m < 60) return Math.floor(m) + "m ago";
+      var h = m / 60; if (h < 24) return Math.floor(h) + "h ago";
+      return Math.floor(h / 24) + "d ago";
+    }
+    function card(n, mine) {
+      var el = document.createElement("div");
+      el.className = "note" + (mine ? " mine" : "");
+      var p = document.createElement("p");
+      p.className = "note-msg";
+      p.textContent = n.message;
+      var meta = document.createElement("span");
+      meta.className = "note-meta";
+      var fl = flag(n.country);
+      meta.textContent = (fl ? fl + " · " : "") + ago(n.ts);
+      el.appendChild(p);
+      el.appendChild(meta);
+      return el;
+    }
+    function empty() {
+      var e = document.createElement("p");
+      e.className = "board-empty";
+      e.textContent = "Be the first to say hi 👋";
+      return e;
+    }
+
+    fetch(API + "/notes")
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        listEl.textContent = "";
+        var notes = (d && d.notes) || [];
+        if (!notes.length) { listEl.appendChild(empty()); return; }
+        notes.forEach(function (n) { listEl.appendChild(card(n, false)); });
+      })
+      .catch(function () {});
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var msg = document.getElementById("memo-msg").value.trim();
+      var msg = msgEl.value.trim();
       var email = emailEl.value.trim();
-      var hp = document.getElementById("memo-hp").value;
-      if (!msg) { document.getElementById("memo-msg").focus(); return; }
+      var hp = document.getElementById("board-hp").value;
+      if (!msg) { msgEl.focus(); return; }
       if (email && !EMAIL.test(email)) { emailEl.classList.add("err"); emailEl.focus(); return; }
       emailEl.classList.remove("err");
       send.disabled = true;
-      fetch("https://roamwiki-beacon.hanms-data.workers.dev/note", {
+      fetch(API + "/note", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ m: msg, e: email, hp: hp, p: location.pathname }),
       })
-        .then(function (r) { if (r.ok) { root.classList.add("done"); } else { send.disabled = false; } })
+        .then(function (r) {
+          if (!r.ok) { send.disabled = false; return; }
+          var hint = listEl.querySelector(".board-empty");
+          if (hint) hint.remove();
+          listEl.insertBefore(card({ message: msg, country: null, ts: null }, true), listEl.firstChild);
+          msgEl.value = "";
+          emailEl.value = "";
+          send.disabled = false;
+        })
         .catch(function () { send.disabled = false; });
     });
   })();
