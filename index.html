@@ -272,12 +272,25 @@
   <!-- visitor beacon (Cloudflare Worker + D1) -->
   <script>
   (function () {
+    var owner = 0;
+    try {
+      var q = new URLSearchParams(location.search);
+      if (q.has("owner")) {
+        var v = q.get("owner");
+        if (v === "off" || v === "0") localStorage.removeItem("rw_owner");
+        else localStorage.setItem("rw_owner", "1");
+        q.delete("owner");
+        var qs = q.toString();
+        history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+      }
+      owner = localStorage.getItem("rw_owner") === "1" ? 1 : 0;
+    } catch (e) {}
     try {
       fetch("https://roamwiki-beacon.hanms-data.workers.dev/hit", {
         method: "POST",
         keepalive: true,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ p: location.pathname, r: document.referrer }),
+        body: JSON.stringify({ p: location.pathname, r: document.referrer, owner: owner }),
       }).catch(function () {});
     } catch (e) {}
   })();
