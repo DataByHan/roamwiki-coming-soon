@@ -203,5 +203,18 @@
       }, 2400);
     })();
   </script>
+  <!-- visitor beacon (Cloudflare Worker + D1) -->
+  <script>
+  (function () {
+    try {
+      fetch("https://roamwiki-beacon.hanms-data.workers.dev/hit", {
+        method: "POST",
+        keepalive: true,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ p: location.pathname, r: document.referrer }),
+      }).catch(function () {});
+    } catch (e) {}
+  })();
+  </script>
 </body>
 </html>
