@@ -116,10 +116,12 @@
     display:inline-flex;align-items:baseline;gap:.5ch;
     font-size:clamp(14px,1.7vw,17px);font-weight:600;color:var(--fg-subtle);
     letter-spacing:.01em;
+    line-height:1.6;min-height:1.6em;white-space:nowrap;
   }
   .rotator .label{color:var(--fg-subtle)}
   .rotator .word{
     position:relative;min-width:9ch;text-align:left;color:var(--o2);
+    line-height:1.6;white-space:nowrap;
     transition:opacity .5s ease, transform .5s ease;
   }
   .rotator .word.out{opacity:0;transform:translateY(6px)}
