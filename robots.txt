@@ -1,0 +1,17 @@
+# roamwiki.com — robots.txt
+# GitHub Pages repo 루트에 그대로 넣으면 https://roamwiki.com/robots.txt 로 서빙됨.
+
+User-agent: *
+Allow: /
+
+# 주요 검색엔진 봇 명시적 허용 (선택이지만 명확성)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti          # 네이버(Naver) 크롤러
+Allow: /
+
+User-agent: Baiduspider   # 바이두(Baidu) 크롤러
+Allow: /
+
+Sitemap: https://roamwiki.com/sitemap.xml

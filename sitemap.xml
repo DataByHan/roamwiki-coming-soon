@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- roamwiki.com — sitemap. GitHub Pages repo 루트에 넣으면 /sitemap.xml 로 서빙됨.
+     페이지가 늘면 <url> 블록을 추가하고 lastmod 를 갱신할 것. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://roamwiki.com/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
